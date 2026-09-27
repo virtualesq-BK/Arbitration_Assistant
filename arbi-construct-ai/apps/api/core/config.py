@@ -55,6 +55,15 @@ class Settings(BaseSettings):
     def cors_origin_list(self) -> list[str]:
         return [o.strip() for o in self.CORS_ORIGINS.split(",") if o.strip()]
 
+    @property
+    def async_database_url(self) -> str:
+        """Force asyncpg dialect regardless of how the URL is provided (e.g. Render supplies postgresql://)."""
+        url = self.DATABASE_URL
+        for prefix in ("postgresql://", "postgres://"):
+            if url.startswith(prefix):
+                return "postgresql+asyncpg://" + url[len(prefix):]
+        return url
+
 
 @lru_cache
 def get_settings() -> Settings:
