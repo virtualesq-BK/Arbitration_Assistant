@@ -10,7 +10,7 @@ services:
     name: arbiconstruct-api
     runtime: docker
     dockerfilePath: arbi-construct-ai/apps/api/Dockerfile
-    dockerContext: arbi-construct-ai/apps/api
+    dockerContext: arbi-construct-ai
     plan: free
     envVars:
       - key: DATABASE_URL
