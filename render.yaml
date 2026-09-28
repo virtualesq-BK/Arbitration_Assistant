@@ -44,7 +44,7 @@ services:
     plan: free
     envVars:
       - key: NEXT_PUBLIC_API_URL
-        sync: false
+        value: https://arbiconstruct-api.onrender.com
       - key: NODE_ENV
         value: production
       - key: PORT
