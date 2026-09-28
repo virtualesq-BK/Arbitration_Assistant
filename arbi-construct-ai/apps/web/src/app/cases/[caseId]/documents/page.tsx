@@ -125,7 +125,7 @@ function DocumentsInner() {
           </div>
         </div>
         <div className="mt-3 flex items-center justify-between gap-3">
-          <p className=”text-xs text-slate-500”>업로드된 텍스트는 이 사건에만 색인됩니다. 특권 상태는 사용자가 설정하며, AI는 &ldquo;잠재적 특권 문서&rdquo;만 표시합니다.</p>
+          <p className=”text-xs text-slate-500”>{“업로드된 텍스트는 이 사건에만 색인됩니다. 특권 상태는 사용자가 설정하며, AI는 “잠재적 특권 문서”만 표시합니다.”}</p>
           <button type=”submit” className=”btn-primary” disabled={uploading}>{uploading ? “업로드 중…” : “업로드”}</button>
         </div>
         <div className="mt-3"><ErrorBox message={uploadError} /></div>
