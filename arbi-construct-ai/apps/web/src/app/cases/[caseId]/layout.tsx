@@ -8,14 +8,14 @@ import type { Case } from "@/lib/types";
 import { Badge, ErrorBox } from "@/components/ui";
 
 const TABS = [
-  { slug: "overview", label: "Overview" },
-  { slug: "documents", label: "Documents" },
-  { slug: "timeline", label: "Timeline" },
-  { slug: "claims", label: "Claims" },
-  { slug: "evidence", label: "Evidence" },
-  { slug: "procedure", label: "Procedure" },
-  { slug: "research", label: "Research" },
-  { slug: "ai-analysis", label: "AI Analysis" },
+  { slug: "overview", label: "개요" },
+  { slug: "documents", label: "문서" },
+  { slug: "timeline", label: "타임라인" },
+  { slug: "claims", label: "청구" },
+  { slug: "evidence", label: "증거" },
+  { slug: "procedure", label: "절차" },
+  { slug: "research", label: "리서치" },
+  { slug: "ai-analysis", label: "AI 분석" },
 ];
 
 export default function CaseLayout({ children }: { children: ReactNode }) {
@@ -27,11 +27,11 @@ export default function CaseLayout({ children }: { children: ReactNode }) {
   return (
     <div className="mx-auto max-w-7xl">
       <div className="mb-4">
-        <Link href="/cases" className="text-xs text-slate-500 hover:text-brand-700">← All cases</Link>
+        <Link href="/cases" className="text-xs text-slate-500 hover:text-brand-700">← 전체 사건</Link>
         <div className="mt-1 flex flex-wrap items-center gap-3">
           <h1 className="page-title">{c?.title ?? "Case"}</h1>
           {c && <Badge tone="blue">{c.institution}</Badge>}
-          {c?.seat && <Badge>Seat: {c.seat}</Badge>}
+          {c?.seat && <Badge>중재지: {c.seat}</Badge>}
           {c?.case_ref && <span className="text-xs text-slate-500">{c.case_ref}</span>}
         </div>
       </div>

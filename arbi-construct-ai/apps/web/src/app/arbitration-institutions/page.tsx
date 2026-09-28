@@ -21,8 +21,8 @@ export default function InstitutionsPage() {
   return (
     <div className="mx-auto max-w-7xl">
       <PageHeader
-        title="Arbitration institutions"
-        subtitle="Procedure-stage comparison built from seeded rule records. Each cell cites the article and links to the official source."
+        title="중재기관"
+        subtitle="시딩된 규칙 레코드를 기반으로 절차 단계별 비교표입니다. 각 셀은 해당 조항을 인용하고 공식 출처에 연결됩니다."
       />
       <ErrorBox message={instError ?? error} />
 
@@ -39,10 +39,10 @@ export default function InstitutionsPage() {
               </div>
               <p className="mt-1 text-sm text-slate-600">{i.name}</p>
               <p className="mt-2 text-xs text-slate-500">
-                Rules {i.rules_version ?? "—"}{i.rules_effective_date ? ` · effective ${i.rules_effective_date}` : ""}
+                규칙 {i.rules_version ?? "—"}{i.rules_effective_date ? ` · 발효일 ${i.rules_effective_date}` : ""}
               </p>
               {i.rules_url && (
-                <a href={i.rules_url} target="_blank" rel="noreferrer" className="mt-1 inline-block text-xs text-brand-700 underline">Official rules ↗</a>
+                <a href={i.rules_url} target="_blank" rel="noreferrer" className="mt-1 inline-block text-xs text-brand-700 underline">공식 규칙 ↗</a>
               )}
             </div>
           ))}
@@ -50,13 +50,13 @@ export default function InstitutionsPage() {
       )}
 
       {loading && <Loading />}
-      {table && table.rows.length === 0 && <EmptyState>No seeded rules for the selected institutions. Source not found.</EmptyState>}
+      {table && table.rows.length === 0 && <EmptyState>선택한 기관에 대한 규칙이 없습니다. 출처를 찾을 수 없습니다.</EmptyState>}
       {table && table.rows.length > 0 && (
         <div className="card overflow-x-auto p-0">
           <table className="table">
             <thead>
               <tr>
-                <th className="w-48">Stage</th>
+                <th className="w-48">단계</th>
                 {table.institutions.map((i) => <th key={i.id}>{i.short_name} {i.rules_version}</th>)}
               </tr>
             </thead>
@@ -69,7 +69,7 @@ export default function InstitutionsPage() {
                     return (
                       <td key={i.id}>
                         {cells.length === 0 ? (
-                          <span className="text-xs text-slate-400">Source not found.</span>
+                          <span className="text-xs text-slate-400">출처 없음.</span>
                         ) : (
                           <ul className="space-y-1">
                             {cells.map((cell) => (
@@ -96,7 +96,7 @@ export default function InstitutionsPage() {
         </div>
       )}
       <p className="mt-4 text-xs text-slate-500">
-        Summaries are paraphrased for navigation and are not the official rules text. Verify every provision against the official source before relying on it.
+        요약문은 탐색 편의를 위해 의역된 것이며 공식 규칙 원문이 아닙니다. 의존하기 전에 반드시 공식 출처에서 각 조항을 확인하세요.
       </p>
     </div>
   );

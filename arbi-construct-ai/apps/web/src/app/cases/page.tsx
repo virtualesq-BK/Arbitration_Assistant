@@ -10,23 +10,23 @@ export default function CasesPage() {
 
   return (
     <div className="mx-auto max-w-6xl">
-      <PageHeader title="Cases" subtitle="All arbitrations in your organisation" actions={<Link href="/cases/new" className="btn-primary">New Case</Link>} />
+      <PageHeader title="사건 목록" subtitle="조직의 전체 중재 사건" actions={<Link href="/cases/new" className="btn-primary">새 사건</Link>} />
       <ErrorBox message={error} />
       {loading && <Loading />}
-      {cases && cases.length === 0 && <EmptyState>No cases yet.</EmptyState>}
+      {cases && cases.length === 0 && <EmptyState>등록된 사건이 없습니다.</EmptyState>}
       {cases && cases.length > 0 && (
         <div className="card overflow-x-auto p-0">
           <table className="table">
             <thead>
               <tr>
-                <th>Case</th>
-                <th>Institution</th>
-                <th>Seat</th>
-                <th>Governing law</th>
-                <th className="text-right">Amount in dispute</th>
-                <th>Docs</th>
-                <th>Claims</th>
-                <th>Status</th>
+                <th>사건</th>
+                <th>중재기관</th>
+                <th>중재지</th>
+                <th>준거법</th>
+                <th className="text-right">분쟁금액</th>
+                <th>문서</th>
+                <th>청구</th>
+                <th>상태</th>
               </tr>
             </thead>
             <tbody>

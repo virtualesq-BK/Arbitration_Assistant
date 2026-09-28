@@ -43,17 +43,17 @@ export default function OverviewPage() {
     <div className="grid gap-6 lg:grid-cols-3">
       <div className="space-y-6 lg:col-span-2">
         <section className="card">
-          <h2 className="section-title">Case metadata</h2>
+          <h2 className="section-title">사건 정보</h2>
           <dl className="grid gap-x-6 gap-y-3 text-sm sm:grid-cols-2">
             {[
-              ["Institution", c.institution],
-              ["Seat", c.seat ?? "—"],
-              ["Governing law", c.governing_law ?? "—"],
-              ["Language", c.language],
-              ["Amount in dispute", formatMoney(c.amount_in_dispute, c.currency)],
-              ["Status", c.status],
-              ["Reference", c.case_ref ?? "—"],
-              ["Documents / claims", `${c.stats.documents} / ${c.stats.claims}`],
+              ["중재기관", c.institution],
+              ["중재지", c.seat ?? "—"],
+              ["준거법", c.governing_law ?? "—"],
+              ["언어", c.language],
+              ["분쟁금액", formatMoney(c.amount_in_dispute, c.currency)],
+              ["상태", c.status],
+              ["참조번호", c.case_ref ?? "—"],
+              ["문서 / 청구", `${c.stats.documents} / ${c.stats.claims}`],
             ].map(([k, v]) => (
               <div key={k}>
                 <dt className="text-xs uppercase tracking-wide text-slate-500">{k}</dt>
@@ -64,7 +64,7 @@ export default function OverviewPage() {
           {c.description && <p className="mt-4 text-sm text-slate-600">{c.description}</p>}
           {c.parties && c.parties.length > 0 && (
             <div className="mt-4">
-              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">Parties</h3>
+              <h3 className="mb-2 text-xs font-semibold uppercase tracking-wide text-slate-500">당사자</h3>
               <ul className="flex flex-wrap gap-2">
                 {c.parties.map((p) => (
                   <li key={p.id} className="rounded-md border border-slate-200 px-3 py-1.5 text-sm">
@@ -78,13 +78,13 @@ export default function OverviewPage() {
 
         <section className="card">
           <div className="mb-3 flex items-center justify-between">
-            <h2 className="section-title mb-0">Procedure checklist</h2>
-            <Link href={`/cases/${caseId}/procedure`} className="text-sm text-brand-700 hover:underline">Open procedure →</Link>
+            <h2 className="section-title mb-0">절차 체크리스트</h2>
+            <Link href={`/cases/${caseId}/procedure`} className="text-sm text-brand-700 hover:underline">절차 탭 열기 →</Link>
           </div>
           {!procedure ? (
             <Loading />
           ) : procedure.length === 0 ? (
-            <EmptyState>No procedural steps yet. Generate a checklist from the institution rules on the Procedure tab.</EmptyState>
+            <EmptyState>아직 절차 단계가 없습니다. 절차 탭에서 기관 규칙을 기반으로 체크리스트를 생성하세요.</EmptyState>
           ) : (
             <ul className="divide-y divide-slate-100">
               {procedure.map((p) => (
@@ -97,7 +97,7 @@ export default function OverviewPage() {
                       {p.due_date && ` · due ${p.due_date}`}
                     </div>
                   </div>
-                  {isOverdue(p) ? <Badge tone="red">Overdue</Badge> : <Badge tone={statusTone(p.status)}>{humanize(p.status)}</Badge>}
+                  {isOverdue(p) ? <Badge tone="red">기한 초과</Badge> : <Badge tone={statusTone(p.status)}>{humanize(p.status)}</Badge>}
                 </li>
               ))}
             </ul>
@@ -105,11 +105,11 @@ export default function OverviewPage() {
         </section>
 
         <section className="card">
-          <h2 className="section-title">Issues</h2>
+          <h2 className="section-title">이슈</h2>
           {!issues ? (
             <Loading />
           ) : issues.length === 0 ? (
-            <EmptyState>No issues recorded.</EmptyState>
+            <EmptyState>기록된 이슈가 없습니다.</EmptyState>
           ) : (
             <ul className="space-y-3">
               {issues.map((i) => (
@@ -129,34 +129,34 @@ export default function OverviewPage() {
 
       <aside className="space-y-6">
         <section className="card border-red-200">
-          <h2 className="section-title flex items-center gap-2"><span aria-hidden="true">⚠</span> AI alerts</h2>
+          <h2 className="section-title flex items-center gap-2"><span aria-hidden="true">⚠</span> AI 알림</h2>
           <ul className="space-y-2 text-sm">
             {overdue.map((p) => (
               <li key={p.id} className="rounded-md bg-red-50 px-3 py-2 text-red-800">
-                Overdue: {p.title ?? humanize(p.event_type)} (due {p.due_date})
+                기한 초과: {p.title ?? humanize(p.event_type)} (마감 {p.due_date})
               </li>
             ))}
             {needsConfirmation.map((p) => (
               <li key={p.id} className="rounded-md bg-red-50 px-3 py-2 text-red-800">
-                ⚠ Confirm AI-suggested step: {p.title ?? humanize(p.event_type)}
+                ⚠ AI 제안 절차 확인 필요: {p.title ?? humanize(p.event_type)}
               </li>
             ))}
             {(evidence?.gaps ?? []).map((g) => (
               <li key={g.claim_id} className="rounded-md bg-amber-50 px-3 py-2 text-amber-900">
-                Potential evidence gap — {g.claim_ref}: {g.missing_document_types.map(humanize).join(", ") || "no linked evidence"}
+                잠재적 증거 공백 — {g.claim_ref}: {g.missing_document_types.map(humanize).join(", ") || "연결된 증거 없음"}
               </li>
             ))}
             {reviewItems.slice(0, 5).map((r, i) => (
               <li key={`r${i}`} className="rounded-md bg-red-50 px-3 py-2 text-red-800">⚠ {r}</li>
             ))}
             {overdue.length + needsConfirmation.length + (evidence?.gaps.length ?? 0) + reviewItems.length === 0 && (
-              <li className="text-slate-500">No alerts.</li>
+              <li className="text-slate-500">알림 없음.</li>
             )}
           </ul>
           {latest && (
             <p className="mt-3 text-xs text-slate-500">
-              Latest analysis: {latest.agent} · {new Date(latest.created_at).toLocaleString()} ·{" "}
-              <Link href={`/cases/${caseId}/ai-analysis`} className="text-brand-700 hover:underline">view</Link>
+              최근 분석: {latest.agent} · {new Date(latest.created_at).toLocaleString("ko-KR")} ·{" "}
+              <Link href={`/cases/${caseId}/ai-analysis`} className="text-brand-700 hover:underline">보기</Link>
             </p>
           )}
           <p className="mt-3 rounded bg-slate-100 px-2 py-1.5 text-[11px] text-slate-600">{AI_DISCLAIMER}</p>

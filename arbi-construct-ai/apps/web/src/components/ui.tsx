@@ -1,6 +1,6 @@
 import type { ReactNode } from "react";
 
-export function Loading({ label = "Loading…" }: { label?: string }) {
+export function Loading({ label = "불러오는 중…" }: { label?: string }) {
   return <p className="py-6 text-sm text-slate-500">{label}</p>;
 }
 

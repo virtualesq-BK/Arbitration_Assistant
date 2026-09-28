@@ -47,17 +47,17 @@ function EvidenceInner() {
         <div className="flex items-center gap-2">
           <label htmlFor="claimf" className="text-sm text-slate-600">Claim</label>
           <select id="claimf" className="input w-auto" value={claimFilter} onChange={(e) => setClaimFilter(e.target.value)}>
-            <option value="">All claims</option>
+            <option value="">전체 청구</option>
             {(claims ?? []).map((c) => <option key={c.id} value={c.id}>{c.claim_ref} — {c.title}</option>)}
           </select>
         </div>
-        <button type="button" className="btn-primary" onClick={runEvidenceAgent} disabled={busy}>{busy ? "Running Evidence Agent…" : "Run Evidence Agent"}</button>
+        <button type="button" className="btn-primary" onClick={runEvidenceAgent} disabled={busy}>{busy ? "증거 에이전트 실행 중…" : "증거 에이전트 실행"}</button>
       </div>
 
       <section>
-        <h2 className="section-title">Potential evidence gaps</h2>
+        <h2 className="section-title">잠재적 증거 공백</h2>
         {gaps.length === 0 ? (
-          <EmptyState>No rule-based evidence gaps detected{claimFilter ? " for this claim" : ""}.</EmptyState>
+          <EmptyState>규칙 기반 증거 공백이 감지되지 않았습니다{claimFilter ? " (해당 청구)" : ""}.</EmptyState>
         ) : (
           <ul className="space-y-2">
             {gaps.map((g) => (
@@ -65,7 +65,7 @@ function EvidenceInner() {
                 <div className="mb-1 flex flex-wrap items-center gap-2">
                   <span className="font-mono text-xs font-semibold">{g.claim_ref}</span>
                   <Badge tone="yellow">POTENTIAL EVIDENCE GAP</Badge>
-                  {g.missing_document_types.map((t) => <Badge key={t} tone="yellow">missing: {humanize(t)}</Badge>)}
+                  {g.missing_document_types.map((t) => <Badge key={t} tone="yellow">누락: {humanize(t)}</Badge>)}
                 </div>
                 <p>{g.message}</p>
               </li>
@@ -73,18 +73,18 @@ function EvidenceInner() {
           </ul>
         )}
         {data && data.unlinked_documents > 0 && (
-          <p className="mt-2 text-xs text-slate-500">{data.unlinked_documents} case documents are not linked to any claim.</p>
+          <p className="mt-2 text-xs text-slate-500">사건 문서 {data.unlinked_documents}건이 청구에 연결되지 않았습니다.</p>
         )}
       </section>
 
       <section className="card overflow-x-auto p-0">
         <h2 className="section-title p-4 pb-0">Linked evidence ({rows.length})</h2>
         {rows.length === 0 ? (
-          <div className="p-4"><EmptyState>No evidence linked.</EmptyState></div>
+          <div className="p-4"><EmptyState>연결된 증거가 없습니다.</EmptyState></div>
         ) : (
           <table className="table mt-3">
             <thead>
-              <tr><th>Claim</th><th>Exhibit</th><th>Document</th><th>Type</th><th>Date</th><th>Relevance note</th><th>Source</th></tr>
+              <tr><th>청구</th><th>증거번호</th><th>문서</th><th>유형</th><th>날짜</th><th>관련성 메모</th><th>출처</th></tr>
             </thead>
             <tbody>
               {rows.map((e) => (
@@ -95,7 +95,7 @@ function EvidenceInner() {
                   <td>{humanize(e.document_type)}</td>
                   <td className="whitespace-nowrap tabular-nums">{e.document_date ?? "—"}</td>
                   <td className="text-slate-600">{e.relevance_note ?? "—"}</td>
-                  <td>{e.added_by_ai ? <Badge tone="purple">AI suggested</Badge> : <Badge>User</Badge>}</td>
+                  <td>{e.added_by_ai ? <Badge tone="purple">AI 제안</Badge> : <Badge>사용자</Badge>}</td>
                 </tr>
               ))}
             </tbody>

@@ -47,21 +47,21 @@ export default function ProcedurePage() {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center justify-between gap-3">
         <div>
-          <h2 className="section-title mb-0">Procedural checklist</h2>
+          <h2 className="section-title mb-0">절차 체크리스트</h2>
           <p className="text-xs text-slate-500">
-            Steps are linked to {c?.institution ?? "institution"} rule citations. AI-suggested steps must be confirmed by a responsible lawyer; deadlines depend on the arbitration agreement and procedural orders.
+            각 단계는 {c?.institution ?? "기관"} 규칙 조항에 연결됩니다. AI 제안 단계는 담당 변호사가 반드시 확인해야 합니다. 기한은 중재합의 및 절차명령에 따라 달라집니다.
           </p>
         </div>
-        <button type="button" className="btn-secondary" onClick={generate} disabled={busy}>{busy ? "Generating…" : `Suggest steps from ${c?.institution ?? ""} rules`}</button>
+        <button type="button" className="btn-secondary" onClick={generate} disabled={busy}>{busy ? "생성 중…" : `${c?.institution ?? ""} 규칙 기반 단계 제안`}</button>
       </div>
       <ErrorBox message={error ?? actionError} />
       {loading && <Loading />}
-      {events && events.length === 0 && <EmptyState>No procedural steps yet — use “Suggest steps” to draft a checklist from seeded rules.</EmptyState>}
+      {events && events.length === 0 && <EmptyState>아직 절차 단계가 없습니다 — “단계 제안” 버튼으로 규칙 기반 체크리스트를 생성하세요.</EmptyState>}
       {events && events.length > 0 && (
         <div className="card overflow-x-auto p-0">
           <table className="table">
             <thead>
-              <tr><th>Done</th><th>Stage / step</th><th>Due</th><th>Source citation</th><th>Status</th><th>Notes</th></tr>
+              <tr><th>완료</th><th>단계</th><th>마감</th><th>출처 조항</th><th>상태</th><th>메모</th></tr>
             </thead>
             <tbody>
               {events.map((ev) => (
@@ -80,10 +80,10 @@ export default function ProcedurePage() {
                     <div className="font-medium">{ev.title ?? "—"}</div>
                     {ev.is_ai_suggested && (
                       <div className="mt-1 flex items-center gap-2">
-                        <Badge tone="purple">AI suggested</Badge>
+                        <Badge tone="purple">AI 제안</Badge>
                         {ev.requires_confirmation && (
                           <button type="button" className="text-xs font-medium text-red-700 underline" onClick={() => update(ev, { requires_confirmation: false })}>
-                            ⚠ Confirm step
+                            ⚠ 단계 확인
                           </button>
                         )}
                       </div>
@@ -98,7 +98,7 @@ export default function ProcedurePage() {
                     ) : ev.rule_reference ? (
                       <span>{ev.source_rule} {ev.rule_reference}</span>
                     ) : (
-                      <span className="text-slate-400">Source not found.</span>
+                      <span className="text-slate-400">출처 없음.</span>
                     )}
                   </td>
                   <td>

@@ -26,18 +26,18 @@ interface SearchResponse {
 }
 
 const SUGGESTIONS = [
-  "What notice requirements apply to extension of time claims under the contract?",
-  "When must the Terms of Reference be signed?",
-  "What evidence supports the Apron 4 delay?",
-  "How is concurrent delay treated?",
+  "계약상 공기 연장 청구에 적용되는 통지 요건은 무엇인가?",
+  "중재 위탁 조항은 언제까지 서명해야 하는가?",
+  "Apron 4 지연을 뒷받침하는 증거는 무엇인가?",
+  "동시 지연은 어떻게 처리되는가?",
 ];
 
 function SourcePanel({ sources }: { sources: AgentSource[] }) {
   return (
     <aside className="card">
-      <h3 className="section-title">Source panel</h3>
+      <h3 className="section-title">출처 패널</h3>
       {sources.length === 0 ? (
-        <p className="text-sm text-slate-500">Source not found.</p>
+        <p className="text-sm text-slate-500">출처를 찾을 수 없습니다.</p>
       ) : (
         <ol className="space-y-3">
           {sources.map((s) => (
@@ -51,7 +51,7 @@ function SourcePanel({ sources }: { sources: AgentSource[] }) {
               {s.text && <p className="mt-1 line-clamp-4 text-xs text-slate-600">{s.text}</p>}
               {s.source_url && (
                 <a href={s.source_url} target="_blank" rel="noreferrer" className="mt-1 inline-block text-xs text-brand-700 underline">
-                  Official source ↗
+                  공식 출처 ↗
                 </a>
               )}
             </li>
@@ -119,8 +119,8 @@ export default function ResearchPage() {
   return (
     <div className="space-y-6">
       <form onSubmit={runResearch} className="card space-y-3">
-        <label htmlFor="q" className="label">Research question</label>
-        <textarea id="q" className="input min-h-[80px]" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="Ask about institutional rules, construction arbitration practice or this case's documents…" />
+        <label htmlFor="q" className="label">리서치 질문</label>
+        <textarea id="q" className="input min-h-[80px]" value={query} onChange={(e) => setQuery(e.target.value)} placeholder="기관 규칙, 건설 중재 실무 또는 이 사건의 문서에 대해 질문하세요…" />
         <div className="flex flex-wrap gap-2">
           {SUGGESTIONS.map((s) => (
             <button key={s} type="button" className="rounded-full bg-slate-100 px-3 py-1 text-xs text-slate-700 hover:bg-slate-200" onClick={() => setQuery(s)}>{s}</button>
@@ -128,25 +128,25 @@ export default function ResearchPage() {
         </div>
         <div className="flex flex-wrap items-center gap-4">
           <div className="flex items-center gap-2">
-            <label htmlFor="inst" className="text-sm text-slate-600">Rules</label>
+            <label htmlFor="inst" className="text-sm text-slate-600">규칙</label>
             <select id="inst" className="input w-auto" value={institution} onChange={(e) => setInstitution(e.target.value)}>
-              <option value="">Case institution ({c?.institution ?? "…"})</option>
+              <option value="">사건 기관 ({c?.institution ?? "…"})</option>
               {INSTITUTIONS.map((i) => <option key={i} value={i}>{i}</option>)}
             </select>
           </div>
           <label className="flex items-center gap-2 text-sm text-slate-600">
             <input type="checkbox" checked={includeCase} onChange={(e) => setIncludeCase(e.target.checked)} className="accent-brand-600" />
-            Include this case&apos;s documents
+            이 사건 문서 포함
           </label>
           <div className="ml-auto flex gap-2">
-            <button type="button" className="btn-secondary" onClick={runSearch} disabled={busy !== null}>{busy === "search" ? "Searching…" : "Search documents only"}</button>
-            <button type="submit" className="btn-primary" disabled={busy !== null || query.trim().length < 3}>{busy === "ai" ? "Researching…" : "Ask Research Agent"}</button>
+            <button type="button" className="btn-secondary" onClick={runSearch} disabled={busy !== null}>{busy === "search" ? "검색 중…" : "문서만 검색"}</button>
+            <button type="submit" className="btn-primary" disabled={busy !== null || query.trim().length < 3}>{busy === "ai" ? "리서치 중…" : "리서치 에이전트 실행"}</button>
           </div>
         </div>
       </form>
 
       <ErrorBox message={error} />
-      {busy && <Loading label={busy === "ai" ? "Retrieving sources and drafting a grounded answer…" : "Searching…"} />}
+      {busy && <Loading label={busy === "ai" ? "출처를 수집하고 답변을 작성 중입니다…" : "검색 중…"} />}
 
       {response && (
         <div className="grid gap-6 lg:grid-cols-5">
@@ -159,7 +159,7 @@ export default function ResearchPage() {
         <section className="card">
           <h3 className="section-title">Document search results ({hits.length})</h3>
           {hits.length === 0 ? (
-            <p className="text-sm text-slate-500">Source not found.</p>
+            <p className="text-sm text-slate-500">결과가 없습니다.</p>
           ) : (
             <ol className="space-y-3">
               {hits.map((h, i) => (

@@ -1,7 +1,7 @@
 import type { AgentResponse, AgentSource, FindingLabel } from "@/lib/types";
 
 export const AI_DISCLAIMER =
-  "AI-assisted analysis. Final legal judgment must be performed by qualified legal professionals.";
+  "AI 보조 분석 결과입니다. 최종 법적 판단은 반드시 자격을 갖춘 법률 전문가가 수행해야 합니다.";
 
 const LABEL_STYLES: Record<FindingLabel, string> = {
   FACT: "bg-emerald-100 text-emerald-800 ring-emerald-300",
@@ -54,7 +54,7 @@ export default function AIResponseCard({ response, caseId }: { response: AgentRe
       <section>
         <div className="mb-1 flex items-center gap-2">
           <FindingBadge label="AI_SUMMARY" />
-          <h3 className="text-sm font-semibold text-slate-700">Summary</h3>
+          <h3 className="text-sm font-semibold text-slate-700">요약</h3>
         </div>
         <p className="whitespace-pre-line text-sm leading-relaxed text-slate-800">{response.summary}</p>
       </section>
@@ -62,7 +62,7 @@ export default function AIResponseCard({ response, caseId }: { response: AgentRe
       {response.requires_human_review.length > 0 && (
         <section className="rounded-md border border-red-300 bg-red-50 p-4">
           <h3 className="mb-2 flex items-center gap-2 text-sm font-semibold text-red-800">
-            <span aria-hidden="true">⚠</span> Requires human review ({response.requires_human_review.length})
+            <span aria-hidden="true">⚠</span> 전문가 검토 필요 ({response.requires_human_review.length})
           </h3>
           <ul className="space-y-1.5 text-sm text-red-900">
             {response.requires_human_review.map((item, i) => (
@@ -77,7 +77,7 @@ export default function AIResponseCard({ response, caseId }: { response: AgentRe
 
       {response.evidence_gaps.length > 0 && (
         <section className="rounded-md border border-amber-300 bg-amber-50 p-4">
-          <h3 className="mb-2 text-sm font-semibold text-amber-900">Potential evidence gaps ({response.evidence_gaps.length})</h3>
+          <h3 className="mb-2 text-sm font-semibold text-amber-900">잠재적 증거 공백 ({response.evidence_gaps.length})</h3>
           <ul className="list-disc space-y-1 pl-5 text-sm text-amber-900">
             {response.evidence_gaps.map((g, i) => (
               <li key={i}>{g}</li>
@@ -88,7 +88,7 @@ export default function AIResponseCard({ response, caseId }: { response: AgentRe
 
       {response.findings.length > 0 && (
         <section>
-          <h3 className="mb-2 text-sm font-semibold text-slate-700">Findings ({response.findings.length})</h3>
+          <h3 className="mb-2 text-sm font-semibold text-slate-700">분석 결과 ({response.findings.length})</h3>
           <ul className="divide-y divide-slate-100 rounded-md border border-slate-200">
             {response.findings.map((f, i) => (
               <li
@@ -119,9 +119,9 @@ export default function AIResponseCard({ response, caseId }: { response: AgentRe
       )}
 
       <section>
-        <h3 className="mb-2 text-sm font-semibold text-slate-700">Sources ({response.sources.length})</h3>
+        <h3 className="mb-2 text-sm font-semibold text-slate-700">출처 ({response.sources.length})</h3>
         {response.sources.length === 0 ? (
-          <p className="text-sm text-slate-500">Source not found.</p>
+          <p className="text-sm text-slate-500">출처를 찾을 수 없습니다.</p>
         ) : (
           <ol className="space-y-1.5 text-sm">
             {response.sources.map((s) => {

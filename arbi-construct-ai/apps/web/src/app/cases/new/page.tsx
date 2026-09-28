@@ -48,15 +48,15 @@ export default function NewCasePage() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <PageHeader title="New case" subtitle="Create an arbitration workspace" />
+      <PageHeader title="새 사건" subtitle="중재 워크스페이스 생성" />
       <form onSubmit={onSubmit} className="card space-y-4">
         <div>
-          <label htmlFor="title" className="label">Title *</label>
-          <input id="title" className="input" value={title} onChange={(e) => setTitle(e.target.value)} required maxLength={500} placeholder="e.g. Metro Line 3 Extension Arbitration" />
+          <label htmlFor="title" className="label">사건명 *</label>
+          <input id="title" className="input" value={title} onChange={(e) => setTitle(e.target.value)} required maxLength={500} placeholder="예: 3호선 연장공사 중재" />
         </div>
         <div className="grid gap-4 sm:grid-cols-2">
           <div>
-            <label htmlFor="institution" className="label">Institution *</label>
+            <label htmlFor="institution" className="label">중재기관 *</label>
             <select id="institution" className="input" value={institution} onChange={(e) => setInstitution(e.target.value)}>
               {INSTITUTIONS.map((i) => (
                 <option key={i} value={i}>{i}</option>
@@ -64,32 +64,32 @@ export default function NewCasePage() {
             </select>
           </div>
           <div>
-            <label htmlFor="seat" className="label">Seat</label>
-            <input id="seat" className="input" value={seat} onChange={(e) => setSeat(e.target.value)} placeholder="e.g. Singapore" />
+            <label htmlFor="seat" className="label">중재지</label>
+            <input id="seat" className="input" value={seat} onChange={(e) => setSeat(e.target.value)} placeholder="예: 싱가포르" />
           </div>
         </div>
         <div>
-          <label htmlFor="law" className="label">Governing law</label>
-          <input id="law" className="input" value={governingLaw} onChange={(e) => setGoverningLaw(e.target.value)} placeholder="e.g. English law" />
+          <label htmlFor="law" className="label">준거법</label>
+          <input id="law" className="input" value={governingLaw} onChange={(e) => setGoverningLaw(e.target.value)} placeholder="예: 영국법" />
         </div>
         <div className="grid gap-4 sm:grid-cols-3">
           <div className="sm:col-span-2">
-            <label htmlFor="amount" className="label">Amount in dispute</label>
+            <label htmlFor="amount" className="label">분쟁금액</label>
             <input id="amount" className="input" inputMode="decimal" value={amount} onChange={(e) => setAmount(e.target.value.replace(/[^0-9.]/g, ""))} />
           </div>
           <div>
-            <label htmlFor="currency" className="label">Currency</label>
+            <label htmlFor="currency" className="label">통화</label>
             <input id="currency" className="input" value={currency} maxLength={3} onChange={(e) => setCurrency(e.target.value.toUpperCase())} />
           </div>
         </div>
         <div>
-          <label htmlFor="desc" className="label">Description</label>
+          <label htmlFor="desc" className="label">설명</label>
           <textarea id="desc" className="input min-h-[96px]" value={description} onChange={(e) => setDescription(e.target.value)} />
         </div>
         <ErrorBox message={error} />
         <div className="flex justify-end gap-2">
-          <button type="button" className="btn-secondary" onClick={() => router.back()}>Cancel</button>
-          <button type="submit" className="btn-primary" disabled={busy || !title}>{busy ? "Creating…" : "Create case"}</button>
+          <button type="button" className="btn-secondary" onClick={() => router.back()}>취소</button>
+          <button type="submit" className="btn-primary" disabled={busy || !title}>{busy ? "생성 중…" : "사건 생성"}</button>
         </div>
       </form>
     </div>

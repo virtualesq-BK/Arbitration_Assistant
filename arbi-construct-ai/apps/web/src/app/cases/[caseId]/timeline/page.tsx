@@ -55,10 +55,10 @@ export default function TimelinePage() {
   return (
     <div className="grid gap-6 lg:grid-cols-3">
       <section className="lg:col-span-2">
-        <h2 className="section-title">Chronology</h2>
+        <h2 className="section-title">연표</h2>
         <ErrorBox message={error} />
         {loading && <Loading />}
-        {events && events.length === 0 && <EmptyState>No timeline events yet.</EmptyState>}
+        {events && events.length === 0 && <EmptyState>타임라인 이벤트가 없습니다.</EmptyState>}
         {events && events.length > 0 && (
           <ol className="relative ml-3 border-l-2 border-slate-200">
             {events.map((ev) => (
@@ -67,7 +67,7 @@ export default function TimelinePage() {
                 <div className="flex flex-wrap items-center gap-2">
                   <time className="font-mono text-sm font-semibold text-slate-900">{ev.event_date}</time>
                   <Badge tone={TYPE_TONES[ev.event_type] ?? "slate"}>{humanize(ev.event_type)}</Badge>
-                  {ev.is_ai_extracted && <Badge tone="purple">AI extracted</Badge>}
+                  {ev.is_ai_extracted && <Badge tone="purple">AI 추출</Badge>}
                 </div>
                 <p className="mt-1 text-sm text-slate-800">{ev.description}</p>
                 {ev.source_document_id && (
@@ -76,7 +76,7 @@ export default function TimelinePage() {
                     <Link href={`/cases/${caseId}/documents?doc=${ev.source_document_id}`} className="text-brand-700 underline underline-offset-2">
                       {ev.source_document_filename ?? "document"}
                     </Link>
-                    {ev.source_page ? `, p. ${ev.source_page}` : ""}
+                    {ev.source_page ? `, ${ev.source_page}페이지` : ""}
                   </p>
                 )}
               </li>
@@ -87,13 +87,13 @@ export default function TimelinePage() {
 
       <aside>
         <form onSubmit={onSubmit} className="card space-y-3">
-          <h2 className="section-title">Add event</h2>
+          <h2 className="section-title">이벤트 추가</h2>
           <div>
-            <label htmlFor="edate" className="label">Date *</label>
+            <label htmlFor="edate" className="label">날짜 *</label>
             <input id="edate" type="date" className="input" value={date} onChange={(e) => setDate(e.target.value)} required />
           </div>
           <div>
-            <label htmlFor="etype" className="label">Type</label>
+            <label htmlFor="etype" className="label">유형</label>
             <select id="etype" className="input" value={eventType} onChange={(e) => setEventType(e.target.value)}>
               {["GENERAL", "DELAY_EVENT", "NOTICE", "INSTRUCTION", "VARIATION", "PAYMENT", "CLAIM", "SITE_RECORD", "ARBITRATION"].map((t) => (
                 <option key={t} value={t}>{humanize(t)}</option>
@@ -101,18 +101,18 @@ export default function TimelinePage() {
             </select>
           </div>
           <div>
-            <label htmlFor="edesc" className="label">Description *</label>
+            <label htmlFor="edesc" className="label">설명 *</label>
             <textarea id="edesc" className="input min-h-[80px]" value={description} onChange={(e) => setDescription(e.target.value)} required />
           </div>
           <div>
-            <label htmlFor="edoc" className="label">Source document</label>
+            <label htmlFor="edoc" className="label">출처 문서</label>
             <select id="edoc" className="input" value={docId} onChange={(e) => setDocId(e.target.value)}>
-              <option value="">— none —</option>
+              <option value="">— 없음 —</option>
               {(docs ?? []).map((d) => <option key={d.id} value={d.id}>{d.filename}</option>)}
             </select>
           </div>
           <ErrorBox message={formError} />
-          <button type="submit" className="btn-primary w-full" disabled={busy}>{busy ? "Saving…" : "Add to timeline"}</button>
+          <button type="submit" className="btn-primary w-full" disabled={busy}>{busy ? "저장 중…" : "타임라인에 추가"}</button>
         </form>
       </aside>
     </div>

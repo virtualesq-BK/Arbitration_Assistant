@@ -6,14 +6,14 @@ import { useEffect, type ReactNode } from "react";
 import { useAuth } from "@/lib/auth";
 
 const NAV = [
-  { href: "/dashboard", label: "Dashboard" },
-  { href: "/cases", label: "Cases" },
-  { href: "/arbitration-institutions", label: "Institutions" },
-  { href: "/procedure-guide", label: "Procedure Guide" },
+  { href: "/dashboard", label: "대시보드" },
+  { href: "/cases", label: "사건" },
+  { href: "/arbitration-institutions", label: "중재기관" },
+  { href: "/procedure-guide", label: "절차 가이드" },
 ];
 
 export const LEGAL_DISCLAIMER =
-  "ArbiConstruct AI provides AI-assisted information management and research. It does not provide legal advice or legal representation. AI outputs must be reviewed by qualified legal professionals.";
+  "ArbiConstruct AI는 AI 기반 정보 관리 및 리서치 서비스를 제공합니다. 법률 자문 또는 법률 대리인 서비스가 아닙니다. AI 결과물은 반드시 자격을 갖춘 법률 전문가의 검토를 거쳐야 합니다.";
 
 const PUBLIC_PATHS = ["/login", "/"];
 
@@ -47,7 +47,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
           <Link href="/dashboard" className="block text-lg font-semibold text-white">
             ArbiConstruct <span className="text-brand-100">AI</span>
           </Link>
-          <p className="mt-0.5 text-[11px] uppercase tracking-wider text-slate-400">Construction arbitration</p>
+          <p className="mt-0.5 text-[11px] uppercase tracking-wider text-slate-400">건설 중재</p>
         </div>
         <nav className="flex gap-1 overflow-x-auto px-3 pb-3 md:flex-col md:overflow-visible">
           {NAV.map((item) => {
@@ -72,7 +72,7 @@ export default function AppShell({ children }: { children: ReactNode }) {
             }}
             className="text-xs text-slate-400 hover:text-white"
           >
-            Sign out
+            로그아웃
           </button>
         </div>
       </aside>

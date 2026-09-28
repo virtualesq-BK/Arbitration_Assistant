@@ -45,12 +45,12 @@ export default function ProcedureGuidePage() {
 
   return (
     <div className="mx-auto max-w-5xl">
-      <PageHeader title="Procedure guide" subtitle="Select an institution and a procedural stage to see the applicable rule provisions with citations." />
+      <PageHeader title="절차 가이드" subtitle="기관과 절차 단계를 선택하면 해당 규칙 조항과 인용 출처를 확인할 수 있습니다." />
       <ErrorBox message={instError} />
 
       <div className="card mb-6 grid gap-4 md:grid-cols-3">
         <div>
-          <label htmlFor="inst" className="label">1. Institution</label>
+          <label htmlFor="inst" className="label">1. 중재기관</label>
           <select id="inst" className="input" value={institutionId} onChange={(e) => setInstitutionId(e.target.value)}>
             {(institutions ?? []).map((i) => (
               <option key={i.id} value={i.id}>{i.short_name} — Rules {i.rules_version}</option>
@@ -58,7 +58,7 @@ export default function ProcedureGuidePage() {
           </select>
         </div>
         <div>
-          <label htmlFor="stage" className="label">2. Stage</label>
+          <label htmlFor="stage" className="label">2. 절차 단계</label>
           <select id="stage" className="input" value={stage} onChange={(e) => setStage(e.target.value)}>
             {(stages ?? []).map((s) => <option key={s} value={s}>{humanize(s)}</option>)}
           </select>
@@ -66,13 +66,13 @@ export default function ProcedureGuidePage() {
         <div className="flex items-end">
           <label className="flex items-center gap-2 text-sm text-slate-700">
             <input type="checkbox" checked={withAi} onChange={(e) => setWithAi(e.target.checked)} className="accent-brand-600" />
-            Add AI explanation (Procedure Agent)
+            AI 설명 추가 (절차 에이전트)
           </label>
         </div>
       </div>
 
       <ErrorBox message={error} />
-      {loading && <Loading label={withAi ? "Loading rules and generating explanation…" : "Loading…"} />}
+      {loading && <Loading label={withAi ? "규칙을 불러오고 설명을 생성 중입니다…" : "불러오는 중…"} />}
 
       {result && !loading && (
         <div className="space-y-6">
@@ -81,25 +81,25 @@ export default function ProcedureGuidePage() {
               {result.institution.short_name} Rules {result.institution.rules_version} — {humanize(result.stage)}
             </h2>
             {result.source_not_found ? (
-              <EmptyState>Source not found. No seeded provision for this stage — consult the official rules.</EmptyState>
+              <EmptyState>출처를 찾을 수 없습니다. 이 단계에 대한 규칙이 없습니다 — 공식 규칙을 직접 확인하세요.</EmptyState>
             ) : (
               <ul className="space-y-4">
                 {result.rules.map((r) => (
                   <li key={r.id} className="rounded-md border border-slate-200 p-4">
                     <div className="flex flex-wrap items-baseline justify-between gap-2">
                       <h3 className="font-semibold text-slate-900">{r.article_number} — {r.title}</h3>
-                      {r.typical_deadline_days && <span className="text-xs text-slate-500">Typical period: {r.typical_deadline_days} days</span>}
+                      {r.typical_deadline_days && <span className="text-xs text-slate-500">통상 기간: {r.typical_deadline_days}일</span>}
                     </div>
                     <p className="mt-2 text-sm text-slate-700">{r.summary}</p>
                     {r.notes && <p className="mt-2 text-xs text-slate-500">{r.notes}</p>}
                     <p className="mt-2 text-xs">
-                      Source:{" "}
+                      출처:{" "}
                       {r.source_url ? (
                         <a href={r.source_url} target="_blank" rel="noreferrer" className="text-brand-700 underline">
-                          {result.institution.short_name} Rules {r.rule_version}, {r.article_number} ↗
+                          {result.institution.short_name} 규칙 {r.rule_version}, {r.article_number} ↗
                         </a>
                       ) : (
-                        "Source not found."
+                        "출처 없음."
                       )}
                     </p>
                   </li>

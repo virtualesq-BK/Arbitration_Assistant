@@ -97,36 +97,36 @@ function DocumentsInner() {
   return (
     <div className="space-y-6">
       <form onSubmit={onUpload} className="card">
-        <h2 className="section-title">Upload document</h2>
+        <h2 className="section-title">문서 업로드</h2>
         <div className="grid gap-3 md:grid-cols-6">
           <div className="md:col-span-2">
-            <label htmlFor="file" className="label">File (PDF, TXT, EML…)</label>
+            <label htmlFor="file" className="label">파일 (PDF, TXT, EML…)</label>
             <input id="file" ref={fileRef} type="file" className="block w-full text-sm file:mr-3 file:rounded file:border-0 file:bg-brand-50 file:px-3 file:py-2 file:text-brand-700" required />
           </div>
           <div>
-            <label htmlFor="dtype" className="label">Type</label>
+            <label htmlFor="dtype" className="label">유형</label>
             <select id="dtype" className="input" value={docType} onChange={(e) => setDocType(e.target.value)}>
               {DOC_TYPES.map((t) => <option key={t} value={t}>{humanize(t)}</option>)}
             </select>
           </div>
           <div>
-            <label htmlFor="ddate" className="label">Date</label>
+            <label htmlFor="ddate" className="label">날짜</label>
             <input id="ddate" type="date" className="input" value={docDate} onChange={(e) => setDocDate(e.target.value)} />
           </div>
           <div>
-            <label htmlFor="author" className="label">Author</label>
+            <label htmlFor="author" className="label">작성자</label>
             <input id="author" className="input" value={author} onChange={(e) => setAuthor(e.target.value)} />
           </div>
           <div>
-            <label htmlFor="conf" className="label">Confidentiality</label>
+            <label htmlFor="conf" className="label">비밀등급</label>
             <select id="conf" className="input" value={confidentiality} onChange={(e) => setConfidentiality(e.target.value)}>
               {CONFIDENTIALITY.map((t) => <option key={t} value={t}>{humanize(t)}</option>)}
             </select>
           </div>
         </div>
         <div className="mt-3 flex items-center justify-between gap-3">
-          <p className="text-xs text-slate-500">Uploaded text is chunked and indexed for this case only. Privilege status is set by users; the AI only flags “potentially privileged”.</p>
-          <button type="submit" className="btn-primary" disabled={uploading}>{uploading ? "Uploading…" : "Upload"}</button>
+          <p className=”text-xs text-slate-500”>업로드된 텍스트는 이 사건에만 색인됩니다. 특권 상태는 사용자가 설정하며, AI는 “잠재적 특권 문서”만 표시합니다.</p>
+          <button type=”submit” className=”btn-primary” disabled={uploading}>{uploading ? “업로드 중…” : “업로드”}</button>
         </div>
         <div className="mt-3"><ErrorBox message={uploadError} /></div>
       </form>
@@ -136,17 +136,17 @@ function DocumentsInner() {
           <div className="flex items-center justify-between gap-3 p-4">
             <h2 className="section-title mb-0">Documents {docs ? `(${docs.length})` : ""}</h2>
             <select aria-label="Filter by type" className="input w-auto" value={filter} onChange={(e) => setFilter(e.target.value)}>
-              <option value="">All types</option>
+              <option value="">전체 유형</option>
               {DOC_TYPES.map((t) => <option key={t} value={t}>{humanize(t)}</option>)}
             </select>
           </div>
           <ErrorBox message={error} />
           {loading && <div className="px-4"><Loading /></div>}
-          {docs && docs.length === 0 && <div className="p-4"><EmptyState>No documents.</EmptyState></div>}
+          {docs && docs.length === 0 && <div className="p-4"><EmptyState>문서가 없습니다.</EmptyState></div>}
           {docs && docs.length > 0 && (
             <table className="table">
               <thead>
-                <tr><th>Filename</th><th>Type</th><th>Date</th><th>Author</th><th>Confidentiality</th></tr>
+                <tr><th>파일명</th><th>유형</th><th>날짜</th><th>작성자</th><th>비밀등급</th></tr>
               </thead>
               <tbody>
                 {docs.map((d) => (
@@ -167,7 +167,7 @@ function DocumentsInner() {
         </section>
 
         <section className="space-y-4 xl:col-span-2">
-          {!selectedId && <EmptyState>Select a document to view its text and run AI analysis.</EmptyState>}
+          {!selectedId && <EmptyState>문서를 선택하면 본문과 AI 분석을 실행할 수 있습니다.</EmptyState>}
           <ErrorBox message={detailError} />
           {selectedId && !detail && !detailError && <Loading />}
           {detail && (
@@ -176,21 +176,21 @@ function DocumentsInner() {
                 <div>
                   <h3 className="font-semibold">{detail.filename}</h3>
                   <p className="text-xs text-slate-500">
-                    {humanize(detail.document_type)} · {detail.doc_date ?? "undated"} · {detail.chunk_count} indexed chunks
+                    {humanize(detail.document_type)} · {detail.doc_date ?? "날짜 미상"} · {detail.chunk_count}개 청크 색인됨
                   </p>
                 </div>
                 {detail.download_url && (
-                  <a href={detail.download_url} className="btn-secondary text-xs" title={`Link expires in ${detail.download_url_expires_in}s`}>Download</a>
+                  <a href={detail.download_url} className="btn-secondary text-xs" title={`링크 만료: ${detail.download_url_expires_in}초`}>다운로드</a>
                 )}
               </div>
               {detail.summary && <p className="rounded bg-slate-50 p-2 text-sm text-slate-700">{detail.summary}</p>}
               <pre className="max-h-80 overflow-auto whitespace-pre-wrap rounded border border-slate-200 bg-slate-50 p-3 text-xs leading-relaxed text-slate-700">
-                {detail.ocr_text ?? "No extracted text available."}
+                {detail.ocr_text ?? "추출된 텍스트가 없습니다."}
               </pre>
               <div className="flex gap-2">
-                <button type="button" className="btn-primary" disabled={analyzing} onClick={() => analyze("analyze")}>{analyzing ? "Analysing…" : "Analyse document"}</button>
+                <button type="button" className="btn-primary" disabled={analyzing} onClick={() => analyze("analyze")}>{analyzing ? "분석 중…" : "문서 분석"}</button>
                 {(detail.document_type === "CONTRACT" || detail.document_type === "AMENDMENT") && (
-                  <button type="button" className="btn-secondary" disabled={analyzing} onClick={() => analyze("contract-analyze")}>Contract review</button>
+                  <button type="button" className="btn-secondary" disabled={analyzing} onClick={() => analyze("contract-analyze")}>계약서 검토</button>
                 )}
               </div>
             </div>
